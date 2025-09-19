@@ -15,9 +15,11 @@ const HIGHEST_POKEDEX_NUM = 1025;
 let rPoke = "";
 
 class pokemon {
-    constructor(name, picture) {
+    constructor(name, picture, abl1, abl2,) {
         this.name = name;
         this.picture = picture;
+        this.abl1 = abl1;
+        this.abl2 = abl2;
     }
 }
 
@@ -54,9 +56,15 @@ async function getPokemon(pkmn) {
         pokePic.style.display = "block";
         pokePic.src = pokeImgURL;
 
+        // this is gets you your first 3 pokemon
         for (let i = 0; i < (MAX_LEN_POKEMON / 2); i++) {
+
             rPoke = await pokemonGenerator();
-            let newMon = new pokemon(rPoke.name, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${rPoke.id}.png`);
+            let move1 = rPoke.abilities[getRandomInt(2)];
+            let move2 = rPoke.abilities[getRandomInt(2)];
+
+            let image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${rPoke.id}.png`;
+            let newMon = new pokemon(rPoke.name, image, move1, move2);
             user_pokemon[i] = newMon;
         }
 
@@ -68,6 +76,7 @@ async function getPokemon(pkmn) {
             position_array[i].src = user_pokemon[i].picture;
         }
 
-        console.log(user_pokemon);
+        //console.log(user_pokemon);
+        console.log(data);
     }
 }
