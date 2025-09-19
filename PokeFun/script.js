@@ -15,13 +15,16 @@ const HIGHEST_POKEDEX_NUM = 1025;
 let rPoke = "";
 
 class pokemon {
-    constructor(name, picture, abl1, abl2,) {
+    constructor(name, picture, mv1, mv2,) {
         this.name = name;
         this.picture = picture;
-        this.abl1 = abl1;
-        this.abl2 = abl2;
+        this.mv1 = mv1;
+        this.mv2 = mv2;
     }
 }
+
+// make an object for the PokeDisplay, so you can just pass in data 
+// to the PokeDisplay and it'll populate all of the details
 
 const user_pokemon = ["", "", "", "", "", ""];
 
@@ -60,10 +63,11 @@ async function getPokemon(pkmn) {
         for (let i = 0; i < (MAX_LEN_POKEMON / 2); i++) {
 
             rPoke = await pokemonGenerator();
-            let move1 = rPoke.abilities[getRandomInt(2)];
-            let move2 = rPoke.abilities[getRandomInt(2)];
 
+            let move1 = rPoke.moves[getRandomInt(30)];
+            let move2 = rPoke.moves[getRandomInt(30)];
             let image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${rPoke.id}.png`;
+            
             let newMon = new pokemon(rPoke.name, image, move1, move2);
             user_pokemon[i] = newMon;
         }
@@ -77,6 +81,6 @@ async function getPokemon(pkmn) {
         }
 
         //console.log(user_pokemon);
-        console.log(data);
+        console.log(data.moves[0]);
     }
 }
