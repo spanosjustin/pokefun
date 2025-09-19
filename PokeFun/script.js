@@ -1,10 +1,27 @@
 const pokeInfo = document.getElementById("pokeDetails");
 const pokePic = document.getElementById("myImg");
 
+const pos1 = document.getElementById("space_1");
+const pos2 = document.getElementById("space_2");
+const pos3 = document.getElementById("space_3");
+const pos4 = document.getElementById("space_4");
+const pos5 = document.getElementById("space_5");
+const pos6 = document.getElementById("space_6");
+const position_array = [pos1, pos2, pos3, pos4, pos5, pos6];
+
+const MAX_LEN_POKEMON = 6;
 const HIGHEST_POKEDEX_NUM = 1025;
 
-const user_pokemon = ["", "", "", "", "", ""];
+let rPoke = "";
 
+class pokemon {
+    constructor(name, picture) {
+        this.name = name;
+        this.picture = picture;
+    }
+}
+
+const user_pokemon = ["", "", "", "", "", ""];
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -37,8 +54,20 @@ async function getPokemon(pkmn) {
         pokePic.style.display = "block";
         pokePic.src = pokeImgURL;
 
-        const rPoke = await pokemonGenerator();
+        for (let i = 0; i < (MAX_LEN_POKEMON / 2); i++) {
+            rPoke = await pokemonGenerator();
+            let newMon = new pokemon(rPoke.name, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${rPoke.id}.png`);
+            user_pokemon[i] = newMon;
+        }
 
-        console.log(rPoke.name);
+        for(let i = 0; i < MAX_LEN_POKEMON; i++) {
+            if(user_pokemon[i] == "") {
+                continue;
+            }
+            position_array[i].style.display = "block";
+            position_array[i].src = user_pokemon[i].picture;
+        }
+
+        console.log(user_pokemon);
     }
 }
